@@ -91,14 +91,18 @@ for filename in os.listdir(input_folder):
             for box, _ in current_group:
                 merged_boxes.append(box)
 
-        # Check if any non-merge boxes in the merged boxes
-        for merged_box in merged_boxes:
-            for i, box in enumerate(merged_boxes):
-                if is_box_within(merged_box, box):
-                    merged_boxes.pop(i)
-                    print("hihi")
+        res = []
+        # Remove boxes that are within other boxes
+        for i in range(len(merged_boxes)):
+            ok = False
+            for j in range(len(merged_boxes)):
+                if i != j and is_box_within(merged_boxes[j], merged_boxes[i]):
+                    ok = True
                     break
-                
+            if not ok:
+                res.append(merged_boxes[i])
+
+        merged_boxes = res      
 
         # all_boxes = merged_boxes + non_merged_boxes
         merged_boxes.sort(key=lambda x: (x[0][1], x[0][0]))
