@@ -6,6 +6,7 @@ import easyocr
 # Path to the folder containing images
 input_folder = 'processed_images/10693040'  
 output_folder = 'image_crop_sentence/10693040'  
+folder = 'image/Red/10693040'
 def delete_box(boxes):
     h = len(boxes)
     i = 0
@@ -13,7 +14,7 @@ def delete_box(boxes):
         if abs(boxes[i][0][0][1] - boxes[i][0][2][1]) >= 150:
             boxes.pop(i)
             h -= 1
-        elif abs(boxes[i][0][0][0] - boxes[i][0][1][0]) <= 130:
+        elif abs(boxes[i][0][0][0] - boxes[i][0][1][0]) <= 400:
             boxes.pop(i)
             h -= 1
         else:
@@ -47,25 +48,26 @@ for filename in os.listdir(input_folder):
     if filename.lower().endswith(('.png', '.jpg', '.jpeg')): 
         image_path = os.path.join(input_folder, filename)
         image = cv2.imread(image_path)
+        image_tmp = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        _, binary = cv2.threshold(image_tmp, 150, 255, cv2.THRESH_BINARY)
+        cv2.imwrite('enhanced_image.png', binary)
+        results = reader.readtext('enhanced_image.png', height_ths=2, slope_ths=0.9, width_ths=6)
 
-        results = reader.readtext(image_path, height_ths=1.5, slope_ths=2, width_ths=5)
 
         # Extract bounding boxes and sort by the top-left y coordinate
         boxes = [(result[0], result[1]) for result in results]  # List of (bounding box, text)
         boxes.sort(key=lambda x: x[0][0][1])  # Sort by the y coordinate of the top-left corner
-         # Draw bounding box without adding text
+        # Draw bounding box without adding text
         # for box in boxes:
-        #     (top_left, top_right, bottom_right, bottom_left) = box
+        #     (top_left, top_right, bottom_right, bottom_left) = box[0]
         #     top_left = tuple(map(int, top_left))
         #     bottom_right = tuple(map(int, bottom_right))
         #     cv2.rectangle(image, top_left, bottom_right, (0, 255, 0), 2)  # Bounding box in green
+        # plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        # plt.axis('off')  # Hide axes
+        # plt.show()
 
-        #     # Display the image with bounding boxes only
-        #     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-        #     plt.axis('off')  # Hide axes
-        #     plt.show()
-        # Extract the first box
-        boxes = delete_box(boxes)
+        #boxes = delete_box(boxes)
 
         # Group boxes and merge as needed (logic as provided in previous step)
         merged_boxes = []
@@ -122,20 +124,22 @@ for filename in os.listdir(input_folder):
         if not os.path.exists(file_output_folder):
             os.makedirs(file_output_folder)
 
+        index = 0
         # Crop and save each box as an image
-        for i, box in enumerate(merged_boxes):
+        for box in merged_boxes:
             # Get the top-left and bottom-right points of the box
             top_left = tuple(map(int, box[0]))
             bottom_right = tuple(map(int, box[2]))
-
             # Crop the image using the bounding box coordinates
-            cropped_image = image[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
+            cropped_image = image[top_left[1]:max(130,bottom_right[1]),max(251,top_left[0]):bottom_right[0]]
 
-            # Save the cropped image to the respective subfolder
-            cropped_image_path = os.path.join(file_output_folder, f'cropped_{i + 1:03}.png')
             if cropped_image is None or cropped_image.size == 0:
-                print(f"Error: Cropped image {cropped_image_path} is empty.")
+                print("Empty image, skipping...")
             else:
+                # Save the cropped image to the respective subfolder
+                index = index + 1
+                cropped_image_path = os.path.join(file_output_folder, f'cropped_{index:03}.png')
                 cv2.imwrite(cropped_image_path, cropped_image)
                 print(f"Image saved to {cropped_image_path}")
+        if (index > 12): print(file_output_folder) 
 print("All images have been processed and cropped images have been saved successfully.")
