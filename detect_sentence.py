@@ -4,17 +4,16 @@ import matplotlib.pyplot as plt
 import easyocr
 
 # Path to the folder containing images
-input_folder = 'processed_images/10693454'  # Replace with your folder path containing images
-output_folder = 'image_crop/10693454'  # Folder where cropped images will be saved
-
+input_folder = 'processed_images/10693040'  
+output_folder = 'image_crop_sentence/10693040'  
 def delete_box(boxes):
     h = len(boxes)
     i = 0
     while i < h:
-        if abs(boxes[i][0][0][1] - boxes[i][0][2][1]) >= 200 :
+        if abs(boxes[i][0][0][1] - boxes[i][0][2][1]) >= 150:
             boxes.pop(i)
             h -= 1
-        elif abs(boxes[i][0][0][0] - boxes[i][0][1][0]) <= 50:
+        elif abs(boxes[i][0][0][0] - boxes[i][0][1][0]) <= 130:
             boxes.pop(i)
             h -= 1
         else:
@@ -41,20 +40,31 @@ if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
 # Initialize the OCR reader
-reader = easyocr.Reader(['vi', 'en'])  # 'vi' for Vietnamese
+reader = easyocr.Reader(['vi', 'en'])  
 
 # Iterate through each image in the input folder
 for filename in os.listdir(input_folder):
-    if filename.lower().endswith(('.png', '.jpg', '.jpeg')):  # Check for image file extensions
+    if filename.lower().endswith(('.png', '.jpg', '.jpeg')): 
         image_path = os.path.join(input_folder, filename)
         image = cv2.imread(image_path)
 
-        # Use EasyOCR to detect and read text from the image
-        results = reader.readtext(image_path, height_ths=1.5, slope_ths=0.3, width_ths=6)
+        results = reader.readtext(image_path, height_ths=1.5, slope_ths=2, width_ths=5)
 
         # Extract bounding boxes and sort by the top-left y coordinate
         boxes = [(result[0], result[1]) for result in results]  # List of (bounding box, text)
         boxes.sort(key=lambda x: x[0][0][1])  # Sort by the y coordinate of the top-left corner
+         # Draw bounding box without adding text
+        # for box in boxes:
+        #     (top_left, top_right, bottom_right, bottom_left) = box
+        #     top_left = tuple(map(int, top_left))
+        #     bottom_right = tuple(map(int, bottom_right))
+        #     cv2.rectangle(image, top_left, bottom_right, (0, 255, 0), 2)  # Bounding box in green
+
+        #     # Display the image with bounding boxes only
+        #     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        #     plt.axis('off')  # Hide axes
+        #     plt.show()
+        # Extract the first box
         boxes = delete_box(boxes)
 
         # Group boxes and merge as needed (logic as provided in previous step)
@@ -106,6 +116,11 @@ for filename in os.listdir(input_folder):
 
         # all_boxes = merged_boxes + non_merged_boxes
         merged_boxes.sort(key=lambda x: (x[0][1], x[0][0]))
+        # Create a subfolder for the current file
+        filename_without_extension = os.path.splitext(filename)[0]
+        file_output_folder = os.path.join(output_folder, filename_without_extension)
+        if not os.path.exists(file_output_folder):
+            os.makedirs(file_output_folder)
 
         # Crop and save each box as an image
         for i, box in enumerate(merged_boxes):
@@ -116,11 +131,10 @@ for filename in os.listdir(input_folder):
             # Crop the image using the bounding box coordinates
             cropped_image = image[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
 
-            # Save the cropped image to the output folder
-            filename_without_extension = os.path.splitext(filename)[0]
-            cropped_image_path = os.path.join(output_folder, f'{filename_without_extension}_cropped_{i + 1:03}.png')
+            # Save the cropped image to the respective subfolder
+            cropped_image_path = os.path.join(file_output_folder, f'cropped_{i + 1:03}.png')
             if cropped_image is None or cropped_image.size == 0:
-                print("Error: Cropped image is empty.")
+                print(f"Error: Cropped image {cropped_image_path} is empty.")
             else:
                 cv2.imwrite(cropped_image_path, cropped_image)
                 print(f"Image saved to {cropped_image_path}")

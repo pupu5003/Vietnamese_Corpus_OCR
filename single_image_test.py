@@ -31,9 +31,7 @@ box_color = (255, 0, 0)  # Blue box
 box_thickness = 1  # Thickness of the bounding box lines
 
 # Draw bounding boxes on the image
-print(len(results))
 results = delete_box(results)
-print(len(results))
 for result in results:
     bbox = result[0]  # Bounding box coordinates
     print(bbox)
