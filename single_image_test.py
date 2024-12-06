@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import easyocr
 
 # Path to the image
-image_path = '67a4a488-24ce-4989-a715-9c5947d84784.jpeg'  # Replace with your actual image path
+image_path = 'image_crop/10693454/10693454_page_023/cropped_008/cropped_setence_008.png'  # Replace with your actual image path
 
 def delete_box(boxes):
     h = len(boxes)
@@ -24,14 +24,14 @@ image = cv2.imread(image_path)
 reader = easyocr.Reader(['vi', 'en'])  # 'vi' for Vietnamese
 
 # Use EasyOCR to detect and read text from the image
-results = reader.readtext(image_path, height_ths=1, slope_ths=0.3, width_ths=6)
+results = reader.readtext(image_path, height_ths=1, slope_ths=1, width_ths=0.1)
 
 # Define a color for the bounding box (e.g., red in BGR format)
 box_color = (255, 0, 0)  # Blue box
 box_thickness = 1  # Thickness of the bounding box lines
 
 # Draw bounding boxes on the image
-results = delete_box(results)
+# results = delete_box(results)
 for result in results:
     bbox = result[0]  # Bounding box coordinates
     print(bbox)

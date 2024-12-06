@@ -3,10 +3,24 @@ import os
 import matplotlib.pyplot as plt
 import easyocr
 
+
+data_dict = {
+    # id, sentences per page, wide_crop, margin_x, width_ths_pass
+    10693040: (12, 400, 250, 10),      
+    10693454: (11, 400, 200, 10),       
+    10695896: (12, 200, 290, 10),     
+    10696073: (10, 400),       
+    10709453: (15, 7)       
+}
+
 # Path to the folder containing images
-input_folder = 'processed_images/10693040'  
-output_folder = 'image_crop/10693040'
-sentence_per_image = 12
+input_folder = 'processed_images/10695896'  
+pdf_id = os.path.basename(input_folder) 
+output_folder = f'image_crop/{pdf_id}'
+sentence_per_image = data_dict[int(pdf_id)][0]
+crop_image_wide = data_dict[int(pdf_id)][1]
+margin_x = data_dict[int(pdf_id)][2]
+width_ths_pass = data_dict[int(pdf_id)][3]
 def delete_box(boxes):
     h = len(boxes)
     i = 0
@@ -48,10 +62,10 @@ for filename in os.listdir(input_folder):
     if filename.lower().endswith(('.png', '.jpg', '.jpeg')): 
         image_path = os.path.join(input_folder, filename)
         image = cv2.imread(image_path)
-        image_tmp = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-        _, binary = cv2.threshold(image_tmp, 150, 255, cv2.THRESH_BINARY)
-        cv2.imwrite('enhanced_image.png', binary)
-        results = reader.readtext('enhanced_image.png', height_ths=2, slope_ths=0.9, width_ths=6)
+        # image_tmp = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        # _, binary = cv2.threshold(image_tmp, 150, 255, cv2.THRESH_BINARY)
+        # cv2.imwrite('enhanced_image.png', binary)
+        results = reader.readtext(image_path, height_ths=3, slope_ths=6, width_ths=width_ths_pass)
 
 
         # Extract bounding boxes and sort by the top-left y coordinate
@@ -132,14 +146,15 @@ for filename in os.listdir(input_folder):
             bottom_right = tuple(map(int, box[2]))
             if bottom_right[1] <= 200:
                 continue
-            # Crop the image using the bounding box coordinates
-            cropped_image = image[top_left[1]:bottom_right[1],max(251,top_left[0]):bottom_right[0]]
 
-            if cropped_image is None or cropped_image.size == 0 or abs(cropped_image.shape[1]) <= 300: # x<=700
+
+            cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(margin_x, top_left[0])-20:bottom_right[0]+20]
+
+            if cropped_image is None or cropped_image.size == 0 or abs(cropped_image.shape[1]) <= crop_image_wide: # x<=700
                 # print("Empty image, skipping...")
                 continue
             else:
-                index = index + 1
+                index = index + 1                
                 # create folder for each sentence
                 cropped_image_folder = os.path.join(file_output_folder, f'cropped_{index:03}')
                 if not os.path.exists(cropped_image_folder):
@@ -150,7 +165,7 @@ for filename in os.listdir(input_folder):
                 new_file = os.path.join(cropped_image_folder, f'cropped_word')
                 if not os.path.exists(new_file):
                     os.makedirs(new_file)                
-                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 9, width_ths = 0.1) 
+                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 9, width_ths = 0.07) 
                 word = [(result[0], result[1]) for result in results_word]  # List of (bounding box, text)
                 word.sort(key=lambda x: x[0][0][0]) 
                 cnt = 0
@@ -162,7 +177,42 @@ for filename in os.listdir(input_folder):
                     bottom_right = tuple(map(int, bottom_right))
                     cropped_word_image = cropped_image[max(0, top_left[1] - 10):min(image.shape[0], bottom_right[1] + 7), top_left[0]:bottom_right[0]]
                     cropped_word_image_path = os.path.join(new_file, f'cropped_word_{cnt:03}.png')
-                    cv2.imwrite(cropped_word_image_path, cropped_word_image)                
+                    cv2.imwrite(cropped_word_image_path, cropped_word_image)  
+                parts = filename.split('_')
+                if len(parts) > 2:  # Ensure there is a "page_" part
+                    page_number = parts[2].split('.')[0]  
+                sentence_index = (int(page_number)-1) * sentence_per_image + index 
+                if sentence_index % 4 == 1:
+                    if cnt != 7:
+                        print(f'Error: {filename} - {index} - {cnt} - {sentence_index}') 
+                elif sentence_index % 4 == 2:
+                    if cnt != 7:
+                        print(f'Error: {filename} - {index} - {cnt} - {sentence_index}')  
+                elif sentence_index % 4 == 3:
+                    if cnt != 6:
+                        print(f'Error: {filename} - {index} - {cnt} - {sentence_index}')  
+                elif sentence_index % 4 == 0:
+                    if cnt != 8:
+                        print(f'Error: {filename} - {index} - {cnt} - {sentence_index}')                 
                 # print(f"Image saved to {cropped_image_path}")
-        if (index > sentence_per_image): print(file_output_folder) 
+        if (index != sentence_per_image): print(file_output_folder) 
 print("All images have been processed and cropped images have been saved successfully.")
+
+
+# Bai 10693454:
+# sentence_index = (int(page_number)-1) * sentence_per_image + index 
+# if sentence_index % 4 == 1:
+#     if cnt != 7:
+#         print(f'Error: {filename} - {index} - {cnt} - {sentence_index}') 
+# elif sentence_index % 4 == 2:
+#     if cnt != 7:
+#         print(f'Error: {filename} - {index} - {cnt} - {sentence_index}')  
+# elif sentence_index % 4 == 3:
+#     if cnt != 6:
+#         print(f'Error: {filename} - {index} - {cnt} - {sentence_index}')  
+# elif sentence_index % 4 == 0:
+#     if cnt != 8:
+#         print(f'Error: {filename} - {index} - {cnt} - {sentence_index}')      
+# 
+
+
