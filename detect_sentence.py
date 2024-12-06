@@ -5,8 +5,8 @@ import easyocr
 
 # Path to the folder containing images
 input_folder = 'processed_images/10693040'  
-output_folder = 'image_crop_sentence/10693040'  
-folder = 'image/Red/10693040'
+output_folder = 'image_crop/10693040'
+sentence_per_image = 12
 def delete_box(boxes):
     h = len(boxes)
     i = 0
@@ -57,7 +57,7 @@ for filename in os.listdir(input_folder):
         # Extract bounding boxes and sort by the top-left y coordinate
         boxes = [(result[0], result[1]) for result in results]  # List of (bounding box, text)
         boxes.sort(key=lambda x: x[0][0][1])  # Sort by the y coordinate of the top-left corner
-        # Draw bounding box without adding text
+        #Draw bounding box without adding text
         # for box in boxes:
         #     (top_left, top_right, bottom_right, bottom_left) = box[0]
         #     top_left = tuple(map(int, top_left))
@@ -130,16 +130,39 @@ for filename in os.listdir(input_folder):
             # Get the top-left and bottom-right points of the box
             top_left = tuple(map(int, box[0]))
             bottom_right = tuple(map(int, box[2]))
+            if bottom_right[1] <= 200:
+                continue
             # Crop the image using the bounding box coordinates
-            cropped_image = image[top_left[1]:max(130,bottom_right[1]),max(251,top_left[0]):bottom_right[0]]
+            cropped_image = image[top_left[1]:bottom_right[1],max(251,top_left[0]):bottom_right[0]]
 
-            if cropped_image is None or cropped_image.size == 0:
-                print("Empty image, skipping...")
+            if cropped_image is None or cropped_image.size == 0 or abs(cropped_image.shape[1]) <= 300: # x<=700
+                # print("Empty image, skipping...")
+                continue
             else:
-                # Save the cropped image to the respective subfolder
                 index = index + 1
-                cropped_image_path = os.path.join(file_output_folder, f'cropped_{index:03}.png')
+                # create folder for each sentence
+                cropped_image_folder = os.path.join(file_output_folder, f'cropped_{index:03}')
+                if not os.path.exists(cropped_image_folder):
+                    os.makedirs(cropped_image_folder)   
+                cropped_image_path = os.path.join(cropped_image_folder, f'cropped_setence_{index:03}.png') 
                 cv2.imwrite(cropped_image_path, cropped_image)
-                print(f"Image saved to {cropped_image_path}")
-        if (index > 12): print(file_output_folder) 
+                # create folder to save each word of a sentence
+                new_file = os.path.join(cropped_image_folder, f'cropped_word')
+                if not os.path.exists(new_file):
+                    os.makedirs(new_file)                
+                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 9, width_ths = 0.1) 
+                word = [(result[0], result[1]) for result in results_word]  # List of (bounding box, text)
+                word.sort(key=lambda x: x[0][0][0]) 
+                cnt = 0
+                # detect and crop word
+                for (bbox, text) in word:
+                    cnt = cnt + 1
+                    (top_left, top_right, bottom_right, bottom_left) = bbox
+                    top_left = tuple(map(int, top_left))
+                    bottom_right = tuple(map(int, bottom_right))
+                    cropped_word_image = cropped_image[max(0, top_left[1] - 10):min(image.shape[0], bottom_right[1] + 7), top_left[0]:bottom_right[0]]
+                    cropped_word_image_path = os.path.join(new_file, f'cropped_word_{cnt:03}.png')
+                    cv2.imwrite(cropped_word_image_path, cropped_word_image)                
+                # print(f"Image saved to {cropped_image_path}")
+        if (index > sentence_per_image): print(file_output_folder) 
 print("All images have been processed and cropped images have been saved successfully.")
