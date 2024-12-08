@@ -132,15 +132,20 @@ class Wiki:
             
             sentence = ""
             for child in poemContainer:
-                if(child.name == 'span'): continue
+                if (child.name == 'sup'): continue
+                if (child.name == 'span'):
+                    id = child.get('id')
+                    if (id != None and "dong" in id): 
+                        continue
+                    
                 if (child.name == 'br'): 
-                    if (sentence != ""): data[f'{name}'].append(sentence.lstrip('\n').rstrip('\n'))
+                    if (sentence != ""): data[f'{name}'].append(sentence.lstrip('\n').rstrip('\n').rstrip(' '))
                     sentence = ""
                 sentence += child.text
                 # print(child.text)
                 # print("BANANA")
             
-            if (sentence != ""): data[f'{name}'].append(sentence.lstrip('\n').rstrip('\n'))
+            if (sentence != ""): data[f'{name}'].append(sentence.lstrip('\n').rstrip('\n').rstrip(' '))
         
         if (len(data[f'{name}']) == 0): return {}
         return data

@@ -43,17 +43,19 @@ def crawlWiki(url, name):
     if not os.path.exists(f'data'):
         os.makedirs(f'data')
         
-    # print(poems)
-    
     data = []
-    for poem in poems:
-        smallDoc = fetchDocument(poem['url'], 'document2')
-        print(poem['url'])
-        dict = crawler.process(smallDoc, poem['name'])
-        if (len(dict) != 0): data.append(dict)
-    
-    if (len(data) == 0):
+    if (name == "ChinhPhuNgam"):
         data.append(crawler.process(crawler.document, name))
+        
+    else:
+        for poem in poems:
+            smallDoc = fetchDocument(poem['url'], 'document2')
+            print(poem['url'])
+            dict = crawler.process(smallDoc, poem['name'])
+            if (len(dict) != 0): data.append(dict)
+        
+        if (len(data) == 0):
+            data.append(crawler.process(crawler.document, name))
         
     json_poem = json.dumps(data, indent=4)
     with open(f"data/{name}.json", "w") as file:
@@ -158,9 +160,9 @@ mainPoems = [
 # for poem in mainPoems:
 #     crawlThiVien(poem['url'], poem['name'])
 
-# crawlWiki("https://vi.wikisource.org/wiki/Trinh_th%E1%BB%AD", "TrinhThu")
+crawlWiki("https://vi.wikisource.org/wiki/Chinh_ph%E1%BB%A5_ng%C3%A2m_(%C4%90o%C3%A0n_Th%E1%BB%8B_%C4%90i%E1%BB%83m_d%E1%BB%8Bch)", "ChinhPhuNgam")
 # crawlPhuDay("https://phuday.com/tien-pha-dich-luc.html", "TienPhaDichLuc")
-crawlChuNom("https://chunom.org/shelf/corpus/2/", "BuomHoaTanTruyen")
+# crawlChuNom("https://chunom.org/shelf/corpus/2/", "BuomHoaTanTruyen")
     
 # "https://vi.wikisource.org/wiki/H%E1%BA%A1nh_Th%E1%BB%A5c_ca", "HanhThucCa"
 # "https://vi.wikisource.org/wiki/Trinh_th%E1%BB%AD", "TrinhThu"
