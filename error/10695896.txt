@@ -1,0 +1,40 @@
+image_crop/10695896/10695896_page_001/cropped_005/cropped_word   8   7   Duyên đã may cớ sao lại rủi?
+image_crop/10695896/10695896_page_001/cropped_006/cropped_word   8   7   Nghĩ nguồn cơn dở dói sao đang?
+image_crop/10695896/10695896_page_001/cropped_008/cropped_word   10   8   Nghĩ mình, mình lại thêm thương nỗi mình!
+image_crop/10695896/10695896_page_001/cropped_010/cropped_word   9   7   Vẻ phù dung một đoá khoe tươi;
+image_crop/10695896/10695896_page_002/cropped_009/cropped_word   8   7   Câu cẩm tú đàn anh họ Lý,
+image_crop/10695896/10695896_page_003/cropped_001/cropped_word   8   7   Cầm điếm nguyệt, phỏng tầm Tư Mã,
+image_crop/10695896/10695896_page_003/cropped_011/cropped_word   8   6   Hồng lâu còn khoá then sương,
+image_crop/10695896/10695896_page_003/cropped_013/cropped_word   1   7   Làng cung kiếm rắp ranh bắn sẻ,
+image_crop/10695896/10695896_page_003
+image_crop/10695896/10695896_page_004/cropped_010/cropped_word   3   7   Sợi xích thằng đâu để vướng chân.
+image_crop/10695896/10695896_page_004/cropped_011/cropped_word   9   6   Vắt tay nằm nghĩ cơ trần,
+image_crop/10695896/10695896_page_004/cropped_013/cropped_word   9   7   Kìa thế cục như in giấc mộng,
+image_crop/10695896/10695896_page_004
+image_crop/10695896/10695896_page_011/cropped_003/cropped_word   7   6   Hay thiên cũng có điều gì?
+image_crop/10695896/10695896_page_012/cropped_003/cropped_word   7   6   Cái đêm hôm ấy đêm gì,
+image_crop/10695896/10695896_page_016/cropped_004/cropped_word   9   8   Cam công đặt cái khăn này tắc ơ.
+image_crop/10695896/10695896_page_018/cropped_011/cropped_word   9   6   Phòng tiêu lạnh ngắt như đồng,
+image_crop/10695896/10695896_page_019/cropped_006/cropped_word   8   7   Dấu dương xa đám cỏ quanh co.
+image_crop/10695896/10695896_page_020/cropped_007/cropped_word   7   6   Hoa này bướm nỡ thờ ơ,
+image_crop/10695896/10695896_page_021/cropped_001/cropped_word   8   7   Tay nguyệt lão chẳng xe thì chớ,
+image_crop/10695896/10695896_page_021/cropped_010/cropped_word   8   7   Để thân này cỏ úng tơ mành.
+image_crop/10695896/10695896_page_022/cropped_009/cropped_word   8   7   Cảnh hoa lạc nguyệt minh hôm ấy,
+image_crop/10695896/10695896_page_023/cropped_009/cropped_word   8   7   Ai ngờ tiếng dế than ri rỉ,
+image_crop/10695896/10695896_page_024/cropped_001/cropped_word   8   7   Khi bóng nguyệt chênh vênh trước ốc,
+image_crop/10695896/10695896_page_024/cropped_011/cropped_word   7   6   Nghĩ nên tiếng cửa quyền ôi,
+image_crop/10695896/10695896_page_025/cropped_006/cropped_word   10   7   Mùi hoắc lê thanh đạm mà ngon.
+image_crop/10695896/10695896_page_026/cropped_005/cropped_word   9   7   Ngọn tâm hoả đốt dàu nét liễu,
+image_crop/10695896/10695896_page_026/cropped_010/cropped_word   6   7   Phận hẩm hiu nhường ấy vì đâu?
+image_crop/10695896/10695896_page_026/cropped_011/cropped_word   3   6   Sinh ly đòi rất thời Ngâu,
+image_crop/10695896/10695896_page_026/cropped_012/cropped_word   7   8   Một năm còn thấy mặt nhau một lần.
+image_crop/10695896/10695896_page_026/cropped_013/cropped_word   8   7   Huống chi cũng lạm phần son phấn,
+image_crop/10695896/10695896_page_026
+image_crop/10695896/10695896_page_027/cropped_006/cropped_word   8   7   Lối đi về ai chẳng chiều ong.
+image_crop/10695896/10695896_page_028/cropped_002/cropped_word   8   7   Khách quần thoa mà để lạnh lùng!
+image_crop/10695896/10695896_page_028/cropped_003/cropped_word   7   6   Thù nhau ru hỡi đông phong?
+image_crop/10695896/10695896_page_028/cropped_005/cropped_word   8   7   Tay tạo hoá cớ sao mà độc,
+image_crop/10695896/10695896_page_029/cropped_002/cropped_word   8   7   Khúc sầu tràng bối rối dường tơ.
+image_crop/10695896/10695896_page_030/cropped_008/cropped_word   8   9   Giữ sao được cái má hồng như xưa
+image_crop/10695896/10695896_page_030
+All images have been processed and cropped images have been saved successfully.
