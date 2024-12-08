@@ -10,7 +10,8 @@ data_dict = {
     10693040: (12, 400, 250, 10),      
     10693454: (11, 400, 200, 10),       
     10695896: (12, 200, 290, 10),     
-    10723635: (12, 400, 250, 10),             
+    10696073: (10, 400),       
+    10709453: (15, 7)       
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -32,7 +33,7 @@ def shift_and_insert_image(folder_path, new_image_path, insert_index):
     shutil.copy(new_image_path, os.path.join(folder_path, new_image_name))
 
 # Path to the folder containing images
-input_folder = 'processed_images/10723635'  
+input_folder = 'processed_images/10693454'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 sentence_per_image = data_dict[int(pdf_id)][0]
@@ -162,19 +163,16 @@ for filename in os.listdir(input_folder):
             # Get the top-left and bottom-right points of the box
             top_left = tuple(map(int, box[0]))
             bottom_right = tuple(map(int, box[2]))
-            if bottom_right[1] <= 100:
+            if bottom_right[1] <= 200:
                 continue
-
-            if bottom_right[0] <= 250:
-                continue 
 
             if top_left[0] < margin_x:
                 top_left = (margin_x, top_left[1])
 
-            if top_left[0] >= 350:
-                cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-200, 350):max(bottom_right[0], 1400)]
+            if abs(bottom_right[0]) >= 400:
+                cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-100, margin_x):min(bottom_right[0]+200, image.shape[1])]
             else:
-                cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-200, margin_x):1500]
+                continue
 
             if cropped_image is None or cropped_image.size == 0 or abs(cropped_image.shape[1]) <= crop_image_wide: # x<=400
                 # print("Empty image, skipping...")
@@ -191,18 +189,9 @@ for filename in os.listdir(input_folder):
                 new_file = os.path.join(cropped_image_folder, f'cropped_word')
                 if not os.path.exists(new_file):
                     os.makedirs(new_file)                
-                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 5, width_ths = 1) 
+                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 0.9, width_ths = 0.1) 
                 word = [(result[0], result[1]) for result in results_word]  # List of (bounding box, text)
                 word.sort(key=lambda x: x[0][0][0]) 
-                if not word:
-                    if os.path.exists(cropped_image_path):
-                        os.remove(cropped_image_path)  # Delete the image file
-                    if os.path.exists(new_file):
-                        os.rmdir(new_file)  # Delete the word folder
-                    if os.path.exists(cropped_image_folder):
-                        os.rmdir(cropped_image_folder)  # Delete the sentence folder
-                    index = index - 1
-                    continue
 
                 i=0
                 while i < len(word) - 1:
@@ -278,11 +267,11 @@ for filename in os.listdir(input_folder):
                     max_indices = None
 
                     # First word
-                    if word and abs(word[0][0][0][0]) > 150:
+                    if abs(word[0][0][0][0]) > 150:
                         x_start = 0
-                        x_end = int(min(word[0][0][0][0], cropped_image_1.shape[1]))
+                        x_end = min(word[0][0][0][0], cropped_image_1.shape[1])
                         y_start = 0
-                        y_end = int(cropped_image_1.shape[0])
+                        y_end = cropped_image_1.shape[0]
                         # Crop the space between the two boxes
                         cropped_space = cropped_image_1[y_start:y_end, x_start:x_end]
 
@@ -317,16 +306,16 @@ for filename in os.listdir(input_folder):
                                 # print(f"Temporary cropped space image saved at {cropped_space_temp_path}")
 
                                 # Insert the image at the correct position in the folder
-                                shift_and_insert_image(new_file, cropped_space_temp_path, j+1)
+                                shift_and_insert_image(new_file, cropped_space_temp_path, j)
                                 os.remove(cropped_space_temp_path)  # Clean up temporary file
 
 
                     # Last word
-                    if word and abs(word[len(word)-1][0][1][0] - cropped_image_1.shape[1]) > 200:
-                        x_start = int(word[len(word)-1][0][1][0])
-                        x_end = int(cropped_image_1.shape[1])
+                    if abs(word[len(word)-1][0][1][0] - cropped_image_1.shape[1]) > 130:
+                        x_start = word[len(word)-1][0][1][0]+10
+                        x_end = cropped_image_1.shape[1]
                         y_start = 0
-                        y_end = int(cropped_image_1.shape[0])
+                        y_end = cropped_image_1.shape[0]
                         # Crop the space between the two boxes
                         cropped_space = cropped_image_1[y_start:y_end, x_start:x_end]
 
@@ -336,19 +325,22 @@ for filename in os.listdir(input_folder):
                             cropped_space_temp_path = os.path.join(new_file, f'temp_cropped_space_{cnt:03}.png')
                             cv2.imwrite(cropped_space_temp_path, cropped_space)
                             # print(f"Temporary cropped space image saved at {cropped_space_temp_path}")
-                            file_count = len([f for f in os.listdir(new_file) if os.path.isfile(os.path.join(new_file, f))])
-                            shift_and_insert_image(new_file, cropped_space_temp_path, file_count+1)
+
+                            # Insert the image at the correct position in the folder
+                            if (index % 2 == 0):
+                                shift_and_insert_image(new_file, cropped_space_temp_path, 8)
+                            else:
+                                shift_and_insert_image(new_file, cropped_space_temp_path, 6)
                             os.remove(cropped_space_temp_path)  # Clean up temporary file
                     
                     file_count = len([f for f in os.listdir(new_file) if os.path.isfile(os.path.join(new_file, f))])
-                    if filename == '10723635_page_045.jpeg' and 4 <= index <= 11 and file_count != 7:
-                        print(f'Error: {filename} - {index} - {file_count}')
-                    elif index % 2 == 0 and file_count != 8:
+                    if index % 2 == 0 and file_count != 8:
                         print(f'Error: {filename} - {index} - {file_count}') 
                     elif index % 2 != 0 and file_count != 6:
                         print(f'Error: {filename} - {index} - {file_count}')
 
         if (index != sentence_per_image): print(file_output_folder) 
+
 print("All images have been processed and cropped images have been saved successfully.")
 
 
