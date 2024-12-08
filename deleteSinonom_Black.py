@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os
+##### KHONG CHAY LAI FILE NAY
 
 # Đường dẫn tới thư mục chứa hình ảnh
 input_folder = "image/Black"

@@ -1,5 +1,7 @@
 import os
 import fitz  # PyMuPDF
+##### KHONG CHAY LAI FILE NAY
+
 
 # STEP 1
 # Specify the folder containing PDFs and the output folder for images

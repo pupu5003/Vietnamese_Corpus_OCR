@@ -1,73 +1,50 @@
-Error: 10723635_page_064.jpeg - 9 - 5
-Error: 10723635_page_025.jpeg - 11 - 5
-Error: 10723635_page_052.jpeg - 6 - 6
-Error: 10723635_page_013.jpeg - 1 - 5
-Error: 10723635_page_044.jpeg - 5 - 5
-Error: 10723635_page_044.jpeg - 8 - 6
-Error: 10723635_page_045.jpeg - 4 - 7
-Error: 10723635_page_045.jpeg - 5 - 7
-Error: 10723635_page_045.jpeg - 6 - 7
-Error: 10723635_page_045.jpeg - 7 - 7
-Error: 10723635_page_045.jpeg - 8 - 7
-Error: 10723635_page_045.jpeg - 10 - 7
-Error: 10723635_page_045.jpeg - 11 - 7
-Error: 10723635_page_045.jpeg - 12 - 9
-Error: 10723635_page_004.jpeg - 2 - 7
-Error: 10723635_page_053.jpeg - 6 - 7
-Error: 10723635_page_053.jpeg - 10 - 7
-Error: 10723635_page_069.jpeg - 8 - 7
-Error: 10723635_page_069.jpeg - 9 - 5
-Error: 10723635_page_049.jpeg - 2 - 9
-Error: 10723635_page_008.jpeg - 3 - 5
-Error: 10723635_page_024.jpeg - 4 - 7
-Error: 10723635_page_024.jpeg - 12 - 11
+image_crop/10723635/10723635_page_001/cropped_009/cropped_word   Canh ba thánh thót đồng hồ,
+image_crop/10723635/10723635_page_003/cropped_004/cropped_word   Vì chưng lỡ bước biết đây chốn nào.
+image_crop/10723635/10723635_page_004/cropped_007/cropped_word   Một mình khuya khoắt ra đi,
+image_crop/10723635/10723635_page_010/cropped_001/cropped_word   Ở đời kiên ngạnh với đời,
+image_crop/10723635/10723635_page_010/cropped_003/cropped_word   Chàng rằng: "Nàng vẫn chấp mê,
+image_crop/10723635/10723635_page_013/cropped_005/cropped_word   Cũng còn có lễ lệ bì,
+image_crop/10723635/10723635_page_014/cropped_002/cropped_word   Sớm đưa gã Lý, tối vầy chàng Trương.
+image_crop/10723635/10723635_page_015/cropped_003/cropped_word   Ở trong thế sự vẫn thanh,
+image_crop/10723635/10723635_page_015/cropped_012/cropped_word   Cớ gì mà lại toan thờ Tống công.
+image_crop/10723635/10723635_page_017/cropped_011/cropped_word   Khó khăn nhà xác như vờ,
+image_crop/10723635/10723635_page_025/cropped_009/cropped_word   Nơi ăn ở chốn ở chung chinh,
+image_crop/10723635/10723635_page_025/cropped_011/cropped_word   Nàng nghe chàng nói nhỏ to,
+image_crop/10723635/10723635_page_037/cropped_001/cropped_word   Đàn bà ấy mới đàn bà,
+image_crop/10723635/10723635_page_040/cropped_009/cropped_word   Rằng :"Bây giờ chửa thấy đâu,
+image_crop/10723635/10723635_page_040/cropped_012/cropped_word   Biết chăng chỉ có một bề mà thôi."
+image_crop/10723635/10723635_page_041/cropped_001/cropped_word   "Chàng sao khéo nói nên lời,
+image_crop/10723635/10723635_page_042/cropped_005/cropped_word   Nay ta nói đã đến điều,
+image_crop/10723635/10723635_page_044/cropped_007/cropped_word   Ơn dày trả nghĩa trăng hoa,
+image_crop/10723635/10723635_page_045/cropped_003/cropped_word   Thơ rằng của vợ con chuột đực
+image_crop/10723635/10723635_page_045/cropped_009/cropped_word   Mấy lúc lòng vàng chỉ bóng ô.
+image_crop/10723635/10723635_page_045/cropped_010/cropped_word   Chăn gối lẻ loi đà mấy tối,
+image_crop/10723635/10723635_page_045/cropped_012/cropped_word   Chuột bạch tức ý họa rằng:
+image_crop/10723635/10723635_page_046/cropped_006/cropped_word   Tấm lòng phó mặc bóng kim ô.
+image_crop/10723635/10723635_page_046/cropped_011/cropped_word   "Gặp cơn sóng gió bất kỳ,
+image_crop/10723635/10723635_page_047/cropped_011/cropped_word   Nàng rằng: "Trong bấy nhiêu lời,
+image_crop/10723635/10723635_page_048/cropped_005/cropped_word   "Cớ chi thiếp mới vắng nhà,
+image_crop/10723635/10723635_page_048/cropped_006/cropped_word   Đã lòng nhử nguyệt quyến hoa tơi bời.
+image_crop/10723635/10723635_page_049/cropped_005/cropped_word   Đói thì đầu gối biết bò,
+image_crop/10723635/10723635_page_050/cropped_001/cropped_word   Lại e lũ khỉ buông dây (?),
+image_crop/10723635/10723635_page_051/cropped_012/cropped_word   Há rằng có ý tứ gì cùng ai.
+image_crop/10723635/10723635_page_052/cropped_001/cropped_word   Cớ sao gieo nặng những lời,
+image_crop/10723635/10723635_page_052/cropped_005/cropped_word   Vợ con vừa bước ra đường.
+image_crop/10723635/10723635_page_053/cropped_007/cropped_word   Ở trong chưa tỏ bằng ngoài,
+image_crop/10723635/10723635_page_054/cropped_003/cropped_word   Chiếu chăn nào có hững hờ,
+image_crop/10723635/10723635_page_056/cropped_006/cropped_word   Minh đơn so với duyên do thế nào.
+image_crop/10723635/10723635_page_056/cropped_011/cropped_word   Rầm nhà tiếng hỏi lao xao,
+image_crop/10723635/10723635_page_058/cropped_005/cropped_word   Cầu nôm đồng thủng lạ đời,
+image_crop/10723635/10723635_page_059/cropped_007/cropped_word   Chàng rằng: "Lời nói cũng kỳ,
+image_crop/10723635/10723635_page_060/cropped_007/cropped_word   Bấy giờ nàng lại tri hô,
+image_crop/10723635/10723635_page_064/cropped_007/cropped_word   Dẫu rằng đức Phật từ bi,
+image_crop/10723635/10723635_page_064/cropped_009/cropped_word   Há rằng việc ấy bởi ai,
+image_crop/10723635/10723635_page_066/cropped_006/cropped_word   Vợ chồng há phải một ngày rồi quên.
+image_crop/10723635/10723635_page_066/cropped_007/cropped_word   Ở đời vô sự là tiên,
+image_crop/10723635/10723635_page_066/cropped_011/cropped_word   Tính sao như thể nước cờ,
+image_crop/10723635/10723635_page_069/cropped_008/cropped_word   Rằng: chê rằng cũng nên khen lệ gì.
+image_crop/10723635/10723635_page_069/cropped_009/cropped_word   Cũng hay trinh tiết giữ nghì,
+image_crop/10723635/10723635_page_070/cropped_009/cropped_word   Vậy nên eo óc cửa nhà,
+image_crop/10723635/10723635_page_071/cropped_010/cropped_word   Chồng đi hoa nguyệt chẳng cho được nào.
 image_crop/10723635/10723635_page_073
-Error: 10723635_page_065.jpeg - 5 - 5
-Error: 10723635_page_032.jpeg - 12 - 7
-Error: 10723635_page_039.jpeg - 10 - 9
-Error: 10723635_page_054.jpeg - 3 - 5
-Error: 10723635_page_003.jpeg - 4 - 6
-Error: 10723635_page_015.jpeg - 13 - 8
-image_crop/10723635/10723635_page_015
-Error: 10723635_page_062.jpeg - 5 - 7
-Error: 10723635_page_019.jpeg - 3 - 5
-Error: 10723635_page_059.jpeg - 7 - 5
-Error: 10723635_page_034.jpeg - 6 - 9
-Error: 10723635_page_043.jpeg - 8 - 7
-Error: 10723635_page_040.jpeg - 2 - 9
-Error: 10723635_page_040.jpeg - 3 - 7
-Error: 10723635_page_040.jpeg - 10 - 7
-Error: 10723635_page_040.jpeg - 12 - 7
-Error: 10723635_page_017.jpeg - 10 - 6
-Error: 10723635_page_001.jpeg - 4 - 6
-Error: 10723635_page_001.jpeg - 8 - 7
-Error: 10723635_page_060.jpeg - 6 - 9
-Error: 10723635_page_037.jpeg - 4 - 7
-Error: 10723635_page_057.jpeg - 2 - 9
-Error: 10723635_page_057.jpeg - 6 - 6
-Error: 10723635_page_041.jpeg - 4 - 7
-Error: 10723635_page_041.jpeg - 8 - 10
-Error: 10723635_page_041.jpeg - 9 - 7
-Error: 10723635_page_027.jpeg - 9 - 5
-Error: 10723635_page_070.jpeg - 2 - 9
-Error: 10723635_page_066.jpeg - 4 - 7
-Error: 10723635_page_066.jpeg - 6 - 9
-Error: 10723635_page_031.jpeg - 1 - 7
-Error: 10723635_page_031.jpeg - 10 - 7
-Error: 10723635_page_031.jpeg - 11 - 5
-Error: 10723635_page_046.jpeg - 1 - 7
-Error: 10723635_page_046.jpeg - 2 - 7
-Error: 10723635_page_046.jpeg - 4 - 7
-Error: 10723635_page_046.jpeg - 5 - 7
-Error: 10723635_page_046.jpeg - 6 - 6
-Error: 10723635_page_046.jpeg - 7 - 7
-Error: 10723635_page_046.jpeg - 8 - 7
-Error: 10723635_page_011.jpeg - 2 - 7
-Error: 10723635_page_007.jpeg - 8 - 7
-Error: 10723635_page_051.jpeg - 12 - 5
-Error: 10723635_page_006.jpeg - 3 - 5
-Error: 10723635_page_006.jpeg - 12 - 9
-Error: 10723635_page_047.jpeg - 4 - 9
-Error: 10723635_page_030.jpeg - 4 - 7
-Error: 10723635_page_067.jpeg - 10 - 7
-Error: 10723635_page_071.jpeg - 12 - 6
+All images have been processed and cropped images have been saved successfully.

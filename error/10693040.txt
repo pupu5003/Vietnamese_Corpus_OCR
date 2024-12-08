@@ -1,22 +1,18 @@
-Error: 10693040_page_007.jpeg - 6 - 9
-Error: 10693040_page_050.jpeg - 5 - 8
-Error: 10693040_page_050.jpeg - 11 - 7
-Error: 10693040_page_027.jpeg - 11 - 7
-Error: 10693040_page_041.jpeg - 2 - 10
-Error: 10693040_page_020.jpeg - 2 - 9
-Error: 10693040_page_021.jpeg - 7 - 7
-Error: 10693040_page_021.jpeg - 8 - 9
-Error: 10693040_page_021.jpeg - 11 - 7
-Error: 10693040_page_017.jpeg - 12 - 9
-Error: 10693040_page_035.jpeg - 7 - 7
-Error: 10693040_page_023.jpeg - 12 - 9
-Error: 10693040_page_054.jpeg - 12 - 9
-Error: 10693040_page_042.jpeg - 5 - 7
-Error: 10693040_page_049.jpeg - 4 - 9
-Error: 10693040_page_024.jpeg - 8 - 9
-Error: 10693040_page_032.jpeg - 12 - 9
-Error: 10693040_page_045.jpeg - 12 - 10
-Error: 10693040_page_004.jpeg - 12 - 9
-Error: 10693040_page_053.jpeg - 4 - 9
-Error: 10693040_page_029.jpeg - 12 - 9
-Error: 10693040_page_025.jpeg - 2 - 9
+image_crop/10693040/10693040_page_005/cropped_008/cropped_word   7   8   Những loài yến-tước biết đâu chí hồng.
+image_crop/10693040/10693040_page_006/cropped_003/cropped_word   7   6   Ngửa-nghiêng lưng túi phong-tao,
+image_crop/10693040/10693040_page_011/cropped_005/cropped_word   7   6   Bến từ có hẹp chi ai,
+image_crop/10693040/10693040_page_014/cropped_012/cropped_word   9   8   Nước non ngao-ngán ra tình hoài nhân.
+image_crop/10693040/10693040_page_014
+image_crop/10693040/10693040_page_025/cropped_001/cropped_word   9   6   Nước trong vắt, cỏ xanh rì
+image_crop/10693040/10693040_page_027/cropped_007/cropped_word   7   6   Ấy ai điểm phấn tô son,
+image_crop/10693040/10693040_page_027/cropped_011/cropped_word   7   6   Rày xin bẻ khóa cung trăng,
+image_crop/10693040/10693040_page_031/cropped_001/cropped_word   7   6   Nàng rằng: "Xin quyết gieo cầu,
+image_crop/10693040/10693040_page_040/cropped_009/cropped_word   7   6   Sinh còn đương cuộc nào ngờ,
+image_crop/10693040/10693040_page_041/cropped_002/cropped_word   9   8   Khói mây man mác dễ mà hỏi, vay!
+image_crop/10693040/10693040_page_044/cropped_005/cropped_word   7   6   Dù tiên duyên đã mãn kỳ,
+image_crop/10693040/10693040_page_045/cropped_012/cropped_word   10   8   Đem duyên giai-lão đính-nguyền lai-sinh.
+image_crop/10693040/10693040_page_046/cropped_011/cropped_word   9   6   Mắt nhìn chung cả con ngươi,
+image_crop/10693040/10693040_page_049/cropped_004/cropped_word   9   8   Giàm danh khóa lợi những người thế gian.
+image_crop/10693040/10693040_page_051/cropped_007/cropped_word   7   6   Khuyên chàng sớm nghĩ lấy nao,
+image_crop/10693040/10693040_page_054/cropped_012/cropped_word   9   8   Màn hoa, cầu đá mấy nơi thiên thành.
+All images have been processed and cropped images have been saved successfully.

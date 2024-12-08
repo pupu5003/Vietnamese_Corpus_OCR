@@ -1,10 +1,11 @@
 import cv2
 import numpy as np
 import os
+##### KHONG CHAY LAI FILE NAY
 
 # Đường dẫn tới thư mục chứa hình ảnh
-input_folder = "image/Red"
-output_folder = "processed_images"
+input_folder = "image/Red/10693040"
+output_folder = "processed_images/10693040"
 
 # Tạo thư mục đầu ra nếu chưa tồn tại
 os.makedirs(output_folder, exist_ok=True)
