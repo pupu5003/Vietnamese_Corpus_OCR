@@ -9,9 +9,9 @@ import re
 
 data_dict = {
     # id: sentences per page, wide_crop, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, first_word_distance, last_word_distance
-    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.01, 90, 150),      
-    10693454: (11, 400, 200, 10),       
-    10695896: (12, 200, 290, 10),     
+    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 90, 150),      
+    10693454: (11, 400, 200, 150, 10, 'data/ChinhPhuNgam.json', 0.1, 90, 150),       
+    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 90, 150),     
     10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.3, 90, 150),            
 }
 
@@ -46,7 +46,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10693040'  
+input_folder = 'processed_images/10695896'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
@@ -186,7 +186,7 @@ for filename in directories:
                 new_file = os.path.join(cropped_image_folder, f'cropped_word')
                 if not os.path.exists(new_file):
                     os.makedirs(new_file)                
-                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 5, width_ths = width_ths_word_2) 
+                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 5, width_ths = 0.1) 
                 word = [(result[0], result[1]) for result in results_word]  # List of (bounding box, text)
                 word.sort(key=lambda x: x[0][0][0]) 
                 if not word:
@@ -240,7 +240,7 @@ for filename in directories:
                     # print(filename, ' ', cropped_word_image.shape[1], ' ', cnt)
                     if cropped_word_image.shape[1] >= 200:
                         # Perform OCR on the oversized crop
-                        tmps = reader.readtext(cropped_word_image, height_ths=1, slope_ths=5, width_ths=0.01)
+                        tmps = reader.readtext(cropped_word_image, height_ths=1, slope_ths=5, width_ths=width_ths_word_2)
                         # If OCR detects multiple results, save each as a separate image
                         if len(tmps) >= 2:
                             w = [(tmp[0], tmp[1]) for tmp in tmps]  # List of (bounding box, text)
@@ -261,7 +261,7 @@ for filename in directories:
                     cropped_word_image_path = os.path.join(new_file, f'cropped_word_{cnt:03}.png')
                     cv2.imwrite(cropped_word_image_path, cropped_word_image)  
                 
-                word_count_ground = len(re.split(r'[ -]+', json_file[current_sentence - 1]))
+                word_count_ground = len(re.split(r'[ -]+', json_file[current_sentence - 1].strip()))
                 if cnt != word_count_ground:
                     # Load the cropped image
                     cropped_image_1 = cv2.imread(cropped_image_path)

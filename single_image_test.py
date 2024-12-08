@@ -4,8 +4,8 @@ import easyocr
 
 # Path to the imagecropped_setence_004.png
 # image_path = 'image_crop/10723635/10723635_page_014/cropped_002/cropped_word/cropped_word_003.png'  # Replace with your actual image path
-image_path = 'image_crop/10693040/10693040_page_030/cropped_005/cropped_setence_005.png'  # Replace with your actual image path
-# image_path = 'processed_images/10693040/10693040_page_043.jpeg'  # Replace with your actual image path
+image_path = 'image_crop/10695896/10695896_page_003/cropped_013/cropped_setence_013.png'  # Replace with your actual image path
+# image_path = 'processed_images/10695896/10695896_page_001.jpeg'  # Replace with your actual image path
 
 
 def delete_box(boxes):
