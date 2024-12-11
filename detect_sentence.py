@@ -12,7 +12,8 @@ data_dict = {
     10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 0.1, 90, 150),      
     10693454: (11, 600, 240, 150, 10, 'data/ChinhPhuNgam.json', 0.01, 0.01, 90, 200),       
     10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150),     
-    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),            
+    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),  
+    10722993: (11, 550, 230, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200),
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -46,7 +47,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10693454'  
+input_folder = 'processed_images/10722993'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
