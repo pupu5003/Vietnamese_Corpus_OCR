@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import easyocr
 
 # Path to the imagecropped_setence_004.png
-# image_path = 'image_crop/10723635/10723635_page_014/cropped_002/cropped_word/cropped_word_003.png'  # Replace with your actual image path
-image_path = 'image_crop/10695896/10695896_page_003/cropped_013/cropped_setence_013.png'  # Replace with your actual image path
+#image_path = 'image_crop/10693040/10693040_page_001/cropped_001/cropped_word/cropped_word_002.png'  # Replace with your actual image path
+image_path = 'image_crop/10693040/10693040_page_001/cropped_001/cropped_setence_001.png'  # Replace with your actual image path
 # image_path = 'processed_images/10695896/10695896_page_001.jpeg'  # Replace with your actual image path
 
 
@@ -27,7 +27,7 @@ image = cv2.imread(image_path)
 reader = easyocr.Reader(['vi', 'en'])  # 'vi' for Vietnamese
 
 # Use EasyOCR to detect and read text from the image
-results = reader.readtext(image_path, height_ths=1.5, slope_ths=5, width_ths=0.01)
+results = reader.readtext(image_path, height_ths=1.5, slope_ths=5, width_ths=0.1)
 print(results)
 
 # Define a color for the bounding box (e.g., red in BGR format)
