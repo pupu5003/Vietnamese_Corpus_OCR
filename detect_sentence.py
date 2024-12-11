@@ -8,11 +8,11 @@ import re
 
 
 data_dict = {
-    # id: sentences per page, wide_crop, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, first_word_distance, last_word_distance
-    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 90, 150),      
-    10693454: (11, 400, 200, 150, 10, 'data/ChinhPhuNgam.json', 0.1, 90, 150),       
-    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 90, 150),     
-    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.3, 90, 150),            
+    # id: sentences per page, crop_image_wide, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, width_ths_word_3, first_word_distance, last_word_distance
+    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 0.1, 90, 150),      
+    10693454: (11, 600, 240, 150, 10, 'data/ChinhPhuNgam.json', 0.01, 0.01, 90, 200),       
+    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150),     
+    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),            
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -46,7 +46,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10695896'  
+input_folder = 'processed_images/10693454'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
@@ -57,9 +57,11 @@ margin_y = data_dict[int(pdf_id)][3]
 width_ths_pass = data_dict[int(pdf_id)][4]
 json_file = parse_json(data_dict[int(pdf_id)][5])
 width_ths_word_2 = data_dict[int(pdf_id)][6]
-first_word_distance = data_dict[int(pdf_id)][7]
-last_word_distance = data_dict[int(pdf_id)][8]
-current_sentence = 0
+width_ths_word_3 = data_dict[int(pdf_id)][7]
+first_word_distance = data_dict[int(pdf_id)][8]
+last_word_distance = data_dict[int(pdf_id)][9]
+current_sentence = 0 
+
 
 def is_box_within(merged_box, non_merged_box):
     top_left_merged = merged_box[0]
@@ -186,7 +188,7 @@ for filename in directories:
                 new_file = os.path.join(cropped_image_folder, f'cropped_word')
                 if not os.path.exists(new_file):
                     os.makedirs(new_file)                
-                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 5, width_ths = 0.1) 
+                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 5, width_ths = width_ths_word_2) 
                 word = [(result[0], result[1]) for result in results_word]  # List of (bounding box, text)
                 word.sort(key=lambda x: x[0][0][0]) 
                 if not word:
@@ -208,7 +210,7 @@ for filename in directories:
                         continue
 
                     # Check if the current box intersects with the next box
-                    if word[i][0][0][0] <= word[i+1][0][0][0] <= word[i][0][2][0]:
+                    if word[i][0][0][0] <= word[i+1][0][0][0] - 5 <= word[i][0][2][0]:
                         # Merge the bounding boxes
                         x_min = min(word[i][0][0][0], word[i+1][0][0][0])
                         y_min = min(word[i][0][0][1], word[i+1][0][0][1])
@@ -233,14 +235,14 @@ for filename in directories:
                     (top_left, top_right, bottom_right, bottom_left) = bbox
                     top_left = tuple(map(int, top_left))
                     bottom_right = tuple(map(int, bottom_right))
-                    cropped_word_image = cropped_image[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
+                    cropped_word_image = cropped_image[max(top_left[1]-5,0):bottom_right[1], top_left[0]:bottom_right[0]]
                     if cropped_word_image is None or cropped_word_image.size == 0: 
                         continue
                     
                     # print(filename, ' ', cropped_word_image.shape[1], ' ', cnt)
                     if cropped_word_image.shape[1] >= 200:
                         # Perform OCR on the oversized crop
-                        tmps = reader.readtext(cropped_word_image, height_ths=1, slope_ths=5, width_ths=width_ths_word_2)
+                        tmps = reader.readtext(cropped_word_image, height_ths=1, slope_ths=5, width_ths=width_ths_word_3)
                         # If OCR detects multiple results, save each as a separate image
                         if len(tmps) >= 2:
                             w = [(tmp[0], tmp[1]) for tmp in tmps]  # List of (bounding box, text)
@@ -250,7 +252,7 @@ for filename in directories:
                                 (top_left, top_right, bottom_right, bottom_left) = bbox
                                 top_left = tuple(map(int, top_left))
                                 bottom_right = tuple(map(int, bottom_right))
-                                cropped_word_image_tmp = cropped_word_image[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
+                                cropped_word_image_tmp = cropped_word_image[max(top_left[1]-5,0):bottom_right[1], top_left[0]:bottom_right[0]]
                                 if cropped_word_image_tmp is None or cropped_word_image_tmp.size == 0: 
                                     continue
                                 cropped_word_image_path = os.path.join(new_file, f'cropped_word_{cnt:03}.png')
@@ -273,7 +275,7 @@ for filename in directories:
                     for j in range(1, len(word)):
                         # Calculate the horizontal distance between top-left of current box and top-right of previous box
                         current_distance = word[j][0][0][0] - word[j-1][0][1][0]
-                        if current_distance > 150:
+                        if current_distance > 130:
                             x_start = int(word[j-1][0][1][0])  # Convert to integer
                             x_end = int(word[j][0][0][0])      # Convert to integer
                             y_start = int(word[j-1][0][1][1])  # Convert to integer
@@ -288,14 +290,12 @@ for filename in directories:
                                 tmp_cnt = tmp_cnt + 1
                                 cropped_space_temp_path = os.path.join(new_file, f'temp_cropped_space_{tmp_cnt:03}.png')
                                 cv2.imwrite(cropped_space_temp_path, cropped_space)
-                                # print(f"Temporary cropped space image saved at {cropped_space_temp_path}")
-
-                                # Insert the image at the correct position in the folder
                                 shift_and_insert_image(new_file, cropped_space_temp_path, j+1)
                                 os.remove(cropped_space_temp_path)  # Clean up temporary file
                     
                     # Last, First word
                     if cnt != word_count_ground:
+                        # First word
                         if word and abs(word[0][0][0][0]) > first_word_distance:
                             x_start = 0
                             x_end = int(word[0][0][0][0])
@@ -310,7 +310,6 @@ for filename in directories:
                                 tmp_cnt = tmp_cnt + 1
                                 cropped_space_temp_path = os.path.join(new_file, f'temp_cropped_space_{tmp_cnt:03}.png')
                                 cv2.imwrite(cropped_space_temp_path, cropped_space)
-                                # Insert the image at the correct position in the folder
                                 shift_and_insert_image(new_file, cropped_space_temp_path, 1)
                                 os.remove(cropped_space_temp_path)  # Clean up temporary file
 
@@ -335,7 +334,10 @@ for filename in directories:
                                 os.remove(cropped_space_temp_path)  # Clean up temporary file
                         
                 if cnt != word_count_ground:
-                    print(new_file, ' ', cnt, ' ', word_count_ground, ' ', json_file[current_sentence-1]) #Error file
+                    error = new_file + ' ' + str(cnt) + ' ' + str(word_count_ground) + ' ' + json_file[current_sentence-1] + '\n'
+                    with open(f'error/{pdf_id}.txt', 'a', encoding='utf-8') as txt_file:
+                        txt_file.write(error)
+                    
 
                 cropped_image_text_path = os.path.join(cropped_image_folder, f'cropped_sentence_text_{index:03}.txt')
                 text_to_store = json_file[current_sentence-1] 
