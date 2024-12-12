@@ -14,6 +14,7 @@ data_dict = {
     10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150),     
     10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),  
     10722993: (11, 550, 230, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200),
+    10933018: (11, 550, 230, 100, 10, 'data/NhiDoMai.json', 0.1, 0.1, 110, 200),
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -47,7 +48,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10722993'  
+input_folder = 'processed_images/10933018'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
@@ -345,7 +346,9 @@ for filename in directories:
                 with open(cropped_image_text_path, 'w', encoding='utf-8') as txt_file:
                     txt_file.write(text_to_store)
                 # print(filename, ' ', index, ' ', cnt, ' ', word_count_ground, ' ', json_file[current_sentence-1])
-        if (index != sentence_per_image): 
+        
+        
+        if pdf_id != '10933018' and (index != sentence_per_image): 
             current_sentence = current_sentence - (index - sentence_per_image)
             print(file_output_folder) 
 print("All images have been processed and cropped images have been saved successfully.")
