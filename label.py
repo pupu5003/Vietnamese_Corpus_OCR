@@ -4,15 +4,17 @@ import re
 import glob
 data_dict = {
     # id: sentences per page, wide_crop, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, first_word_distance, last_word_distance
-    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 90, 150),      
-    10693454: (11, 400, 200, 10),       
-    10695896: (12, 200, 290, 10),     
-    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.3, 90, 150),     
-    10695896: (12, 200, 290, 10,10, 'data/CungOanNgamKhuc.json', 0.3, 90, 150),   
+    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 90, 150,54),      
+    10693454: (11, 400, 200, 10, 10, 'data/ChinhPhuNgam.json', 0.1,90 , 150, 38),       
+    10695896: (12, 200, 290, 10, 10, 'data/CungOanNgamKhuc.json', 0, 90, 150,30),      
+    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.3, 90, 150,73),    
+    10709453: (12, 400, 250, 120, 10, 'data/NhiThapTuHieuDienAm.json', 0.1, 90, 150,32),  
+    10722993: (12, 400, 250, 120, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 90, 150,13),
+    10933018: (12, 400, 250, 120, 10, 'data/NhiDoMai.json', 0.1, 90, 150,67),
 }
 
 #load json dictionary
-with open('dictionary/10693040.json', 'r', encoding='utf-8') as file:
+with open('dictionary/dict.json', 'r', encoding='utf-8') as file:
     dictionary = json.load(file)
 
 
@@ -29,11 +31,11 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-folder = 'processed_images/10693040'  
+folder = 'processed_images/10933018'  
 pdf_id = os.path.basename(folder) 
-num_page = 54
+num_page = data_dict[10933018][9]
 
-dict = parse_json(data_dict[10693040][5])
+dict = parse_json(data_dict[10933018][5])
 
 
 # Set the base folder and iterate over the pages and j values
@@ -44,8 +46,6 @@ for i in range(1, num_page + 1):  # Iterating through pages
     directories = [d for d in os.listdir(page_folder)]
     directories.sort()
     for cropped_folder in directories:
-        if (cropped_folder == ".DS_Store"):
-            continue
         j = j + 1
         s = ""
         cropped_folder_path = os.path.join(page_folder, cropped_folder + "/" + "cropped_word")
@@ -55,7 +55,7 @@ for i in range(1, num_page + 1):  # Iterating through pages
             words = re.split(r'[ -]+', sentence)
             directories_2 = [d for d in os.listdir(cropped_folder_path)]
             directories_2.sort()
-                # Iterate through all files in the cropped_word folder
+            # Iterate through all files in the cropped_word folder
             for i, file in enumerate(directories_2):
                 file_path = os.path.join(cropped_folder_path, file)
                 
