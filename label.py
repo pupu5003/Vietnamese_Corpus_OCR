@@ -11,6 +11,7 @@ data_dict = {
     10709453: (12, 400, 250, 120, 10, 'data/NhiThapTuHieuDienAm.json', 0.1, 90, 150,32),  
     10722993: (12, 400, 250, 120, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 90, 150,13),
     10933018: (12, 400, 250, 120, 10, 'data/NhiDoMai.json', 0.1, 90, 150,67),
+    10732458: (12, 400, 250, 120, 10, 'data/BuomHoaTanTruyen.json', 0.1, 90, 150,41),
 }
 
 #load json dictionary
@@ -19,7 +20,7 @@ with open('dictionary/dict.json', 'r', encoding='utf-8') as file:
 
 
 def parse_json(json_file):
-    with open(json_file, 'r') as f:
+    with open(json_file, 'r',encoding='utf-8') as f:
         json_data = f.read()
         parsed_json = json.loads(json_data)
 
@@ -31,11 +32,11 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-folder = 'processed_images/10933018'  
+folder = 'processed_images/10732458'  
 pdf_id = os.path.basename(folder) 
-num_page = data_dict[10933018][9]
+num_page = data_dict[10732458][9]
 
-dict = parse_json(data_dict[10933018][5])
+dict = parse_json(data_dict[10732458][5])
 
 
 # Set the base folder and iterate over the pages and j values
@@ -55,12 +56,16 @@ for i in range(1, num_page + 1):  # Iterating through pages
             words = re.split(r'[ -]+', sentence)
             directories_2 = [d for d in os.listdir(cropped_folder_path)]
             directories_2.sort()
+            renamed_files = []
             # Iterate through all files in the cropped_word folder
             for i, file in enumerate(directories_2):
                 file_path = os.path.join(cropped_folder_path, file)
                 
                 if os.path.isfile(file_path):  # Ensure it's a file
-                    name = words[i % len(words)]
+                    name = words[i % len(words)]                   
+                    if (name == '\u22ef'):
+                        print('Skip')
+                        continue
                     clean_word = re.sub(r'[^\w\s]', '', name)
                     if clean_word in dictionary:
                         clean_word = dictionary[clean_word]
@@ -78,7 +83,12 @@ for i in range(1, num_page + 1):  # Iterating through pages
                     # Rename the file
                     os.rename(file_path, new_file_path)
                     print(f'Renamed file: {file_path} to {new_file_path}')
-        
+                    renamed_files.append(file_path)
+            
+            for file in directories_2:
+                file_path = os.path.join(cropped_folder_path, file)
+                if os.path.isfile(file_path) and file_path not in renamed_files:
+                    os.remove(file_path)
         txt_path = os.path.join(page_folder, cropped_folder)
         result = cropped_folder.split('_')[1]
         pattern = f"{txt_path}/cropped_sentence_text_{result}.txt"
