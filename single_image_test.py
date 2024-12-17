@@ -1,5 +1,5 @@
 import cv2
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 import easyocr
 
 # Path to the imagecropped_setence_004.png
