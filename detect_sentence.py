@@ -15,6 +15,7 @@ data_dict = {
     10696073: (11, 550, 230, 100, 10, 'data/CungOanThi.json', 0.1, 0.1, 110, 200), 
     10722993: (11, 550, 320, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200),   
     10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),  
+    10729022: (12, 550, 230, 100, 7, 'data/BachVanQuocNguThiTap.json', 0.3, 0.1, 90, 150), 
     10933018: (11, 550, 230, 100, 10, 'data/NhiDoMai.json', 0.1, 0.1, 110, 200),
     10709453: (11, 400, 200, 100, 10, 'data/NhiThapTuHieuDienAm.json', 0.1, 0.1, 110, 200),
     10923624: (11, 550, 160, 100, 10, 'data/TienPhaDichLuc.json', 0.1, 0.1, 110, 200),
@@ -52,7 +53,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10696073'  
+input_folder = 'processed_images/10729022'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
@@ -112,8 +113,14 @@ for filename in directories:
         merged_boxes = []
         non_merged_boxes = []  # List for non-merged boxes
         current_group = []
-        variance_threshold = 50  # Y-coordinate variance threshold
-
+        variance_threshold = 60  # Y-coordinate variance threshold
+        if pdf_id in ['10729022']:
+            for bbox, text in boxes:
+                if bbox[1][0] < 270:
+                    boxes.remove((bbox, text))
+                if bbox[2][0] > 1450:
+                    boxes.remove((bbox, text))
+                        
         for bbox, text in boxes:
             if not current_group:
                 current_group.append((bbox, text))
@@ -178,13 +185,21 @@ for filename in directories:
             if top_left[0] < margin_x:
                 top_left = (margin_x, top_left[1])
             
-            if pdf_id == "10696073" and top_left[0] > 650 :
+            if pdf_id in ['10696073'] and top_left[0] > 650 :
                 continue
 
-            cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-130, margin_x):min(bottom_right[0]+200, image.shape[1])]
+            if pdf_id in ['10729022'] and (top_left[0] > 550 or (bottom_right[0]-top_left[0]) < 140):
+                continue
+
+            if pdf_id in ['10729022']:
+                cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-130, margin_x):image.shape[1]-200]
+            else:
+                cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-130, margin_x):min(bottom_right[0]+200, image.shape[1])]
 
             if cropped_image is None or cropped_image.size == 0 or abs(cropped_image.shape[1]) <= crop_image_wide: 
                 continue
+            elif pdf_id in ['10729022'] and abs(cropped_image.shape[0]) <= 50:
+                continue 
             else:
                 index = index + 1                
                 # create folder for each sentence
@@ -357,7 +372,7 @@ for filename in directories:
                     print(filename, ' ', index, ' ', cnt, ' ', word_count_ground, ' ', json_file[current_sentence-1])
         
         
-        if pdf_id not in ['10732458', '10696073'] and (index != sentence_per_image): 
+        if pdf_id not in ['10732458', '10696073', '10729022'] and (index != sentence_per_image): 
             current_sentence = current_sentence - (index - sentence_per_image)
             print(file_output_folder) 
 print("All images have been processed and cropped images have been saved successfully.")

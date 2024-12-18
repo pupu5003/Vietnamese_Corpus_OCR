@@ -6,7 +6,7 @@ import os
 file_paths = []
 
 # Open the aaa.txt file for reading
-with open('error/10722993.txt', 'r') as file:
+with open('error/10729022.txt', 'r') as file:
     for line in file:
         parts = line.split()
         for part in parts:
