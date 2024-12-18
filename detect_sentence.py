@@ -11,14 +11,14 @@ data_dict = {
     # id: sentences per page, crop_image_wide, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, width_ths_word_3, first_word_distance, last_word_distance
     10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 0.1, 90, 150),      
     10693454: (11, 600, 240, 150, 10, 'data/ChinhPhuNgam.json', 0.01, 0.01, 90, 200),       
-    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150),     
+    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150), 
+    10696073: (11, 550, 230, 100, 10, 'data/CungOanThi.json', 0.1, 0.1, 110, 200), 
+    10722993: (11, 550, 320, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200),   
     10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),  
-    10722993: (11, 550, 230, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200),
     10933018: (11, 550, 230, 100, 10, 'data/NhiDoMai.json', 0.1, 0.1, 110, 200),
     10709453: (11, 400, 200, 100, 10, 'data/NhiThapTuHieuDienAm.json', 0.1, 0.1, 110, 200),
     10923624: (11, 550, 160, 100, 10, 'data/TienPhaDichLuc.json', 0.1, 0.1, 110, 200),
     10732458: (10, 650, 50, 100, 10, 'data/BuomHoaTanTruyen.json', 0.1, 0.1, 110, 200),
-    10933018: (11, 550, 230, 100, 10, 'data/NhiDoMai.json', 0.1, 0.1, 110, 200),
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -52,7 +52,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10732458'  
+input_folder = 'processed_images/10696073'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
@@ -177,6 +177,9 @@ for filename in directories:
 
             if top_left[0] < margin_x:
                 top_left = (margin_x, top_left[1])
+            
+            if pdf_id == "10696073" and top_left[0] > 650 :
+                continue
 
             cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-130, margin_x):min(bottom_right[0]+200, image.shape[1])]
 
@@ -354,7 +357,7 @@ for filename in directories:
                     print(filename, ' ', index, ' ', cnt, ' ', word_count_ground, ' ', json_file[current_sentence-1])
         
         
-        if pdf_id != '10732458' and (index != sentence_per_image): 
+        if pdf_id not in ['10732458', '10696073'] and (index != sentence_per_image): 
             current_sentence = current_sentence - (index - sentence_per_image)
             print(file_output_folder) 
 print("All images have been processed and cropped images have been saved successfully.")
