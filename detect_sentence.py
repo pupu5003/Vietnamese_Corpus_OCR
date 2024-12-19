@@ -8,18 +8,19 @@ import re
 
 
 data_dict = {
-    # id: sentences per page, crop_image_wide, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, width_ths_word_3, first_word_distance, last_word_distance
-    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 0.1, 90, 150),      
-    10693454: (11, 600, 240, 150, 10, 'data/ChinhPhuNgam.json', 0.01, 0.01, 90, 200),       
-    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150), 
-    10696073: (11, 550, 230, 100, 10, 'data/CungOanThi.json', 0.1, 0.1, 110, 200), 
-    10722993: (11, 550, 320, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200),   
-    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150),  
-    10729022: (12, 550, 230, 100, 7, 'data/BachVanQuocNguThiTap.json', 0.3, 0.1, 90, 150), 
-    10933018: (11, 550, 230, 100, 10, 'data/NhiDoMai.json', 0.1, 0.1, 110, 200),
-    10709453: (11, 400, 200, 100, 10, 'data/NhiThapTuHieuDienAm.json', 0.1, 0.1, 110, 200),
-    10923624: (11, 550, 160, 100, 10, 'data/TienPhaDichLuc.json', 0.1, 0.1, 110, 200),
-    10732458: (10, 650, 50, 100, 10, 'data/BuomHoaTanTruyen.json', 0.1, 0.1, 110, 200),
+    # id: sentences per page, crop_image_wide, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, width_ths_word_3, first_word_distance, last_word_distance, threshold
+    10693040: (12, 400, 250, 120, 10, 'data/BichCauKyNgo.json', 0.1, 0.1, 90, 150, 40),      
+    10693454: (11, 600, 240, 150, 10, 'data/ChinhPhuNgam.json', 0.01, 0.01, 90, 200, 40),       
+    10695896: (12, 200, 200, 150, 10, 'data/CungOanNgamKhuc.json', 0.1, 0.1, 90, 150, 40), 
+    10696073: (11, 550, 230, 100, 10, 'data/CungOanThi.json', 0.1, 0.1, 110, 200, 40), 
+    10722993: (11, 550, 320, 100, 10, 'data/ThuDaLuHoaiNgamKhuc.json', 0.1, 0.1, 110, 200, 40),   
+    10723635: (12, 550, 230, 100, 10, 'data/TrinhThu.json', 0.1, 0.3, 90, 150, 40),  
+    10729022: (12, 550, 230, 100, 7, 'data/BachVanQuocNguThiTap.json', 0.3, 0.1, 90, 150, 60), 
+    10933018: (11, 550, 230, 100, 10, 'data/NhiDoMai.json', 0.1, 0.1, 110, 200, 40),
+    10709453: (11, 400, 200, 100, 10, 'data/NhiThapTuHieuDienAm.json', 0.1, 0.1, 110, 200, 40),
+    10923624: (11, 550, 160, 100, 10, 'data/TienPhaDichLuc.json', 0.1, 0.1, 110, 200, 40),
+    10732458: (10, 650, 50, 100, 10, 'data/BuomHoaTanTruyen.json', 0.1, 0.1, 110, 200, 40),
+    10925197: (10, 550, 50, 100, 10, 'data/MaiDinhMongKy.json', 0.1, 0.1, 110, 200, 40),
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -53,7 +54,7 @@ def parse_json(json_file):
     return result
 
 # Path to the folder containing images
-input_folder = 'processed_images/10729022'  
+input_folder = 'processed_images/10925197'  
 pdf_id = os.path.basename(input_folder) 
 output_folder = f'image_crop/{pdf_id}'
 
@@ -67,6 +68,7 @@ width_ths_word_2 = data_dict[int(pdf_id)][6]
 width_ths_word_3 = data_dict[int(pdf_id)][7]
 first_word_distance = data_dict[int(pdf_id)][8]
 last_word_distance = data_dict[int(pdf_id)][9]
+threshold = data_dict[int(pdf_id)][10]
 current_sentence = 0 
 
 
@@ -102,7 +104,7 @@ for filename in directories:
         # image_tmp = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         # _, binary = cv2.threshold(image_tmp, 150, 255, cv2.THRESH_BINARY)
         # cv2.imwrite('enhanced_image.png', binary)
-        results = reader.readtext(image_path, height_ths=3, slope_ths=6, width_ths=width_ths_pass)
+        results = reader.readtext(image_path, height_ths=1.5, slope_ths=6, width_ths=width_ths_pass)
 
 
         # Extract bounding boxes and sort by the top-left y coordinate
@@ -113,12 +115,17 @@ for filename in directories:
         merged_boxes = []
         non_merged_boxes = []  # List for non-merged boxes
         current_group = []
-        variance_threshold = 60  # Y-coordinate variance threshold
+        variance_threshold = threshold  # Y-coordinate variance threshold
         if pdf_id in ['10729022']:
             for bbox, text in boxes:
                 if bbox[1][0] < 270:
                     boxes.remove((bbox, text))
                 if bbox[2][0] > 1450:
+                    boxes.remove((bbox, text))
+
+        if pdf_id in ['10925179']:
+            for bbox, text in boxes:
+                if bbox[1][0] < 110 or (bbox[1][0]-bbox[0][0]) < 100:
                     boxes.remove((bbox, text))
                         
         for bbox, text in boxes:
@@ -191,8 +198,13 @@ for filename in directories:
             if pdf_id in ['10729022'] and (top_left[0] > 550 or (bottom_right[0]-top_left[0]) < 140):
                 continue
 
+            if pdf_id in ['10925197'] and (bottom_right[0] < 110 or (bottom_right[0]-top_left[0]) <= 100):
+                continue
+
             if pdf_id in ['10729022']:
                 cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-130, margin_x):image.shape[1]-200]
+            elif pdf_id in ['10925197']:
+                cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-150, margin_x):min(bottom_right[0]+200, image.shape[1])]
             else:
                 cropped_image = image[top_left[1]-10:bottom_right[1]+10, max(top_left[0]-130, margin_x):min(bottom_right[0]+200, image.shape[1])]
 

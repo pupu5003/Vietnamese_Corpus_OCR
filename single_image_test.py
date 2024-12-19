@@ -4,9 +4,9 @@ import easyocr
 
 # Path to the imagecropped_setence_004.png
 #image_path = 'image_crop/10693040/10693040_page_001/cropped_001/cropped_word/cropped_word_002.png'  # Replace with your actual image path
-image_path = 'image_crop/10693040/10693040_page_001/cropped_001/cropped_setence_001.png'  # Replace with your actual image path
-# image_path = 'processed_images/10695896/10695896_page_001.jpeg'  # Replace with your actual image path
-
+# image_path = 'image_crop/10696073/10696073_page_001/cropped_001/cropped_setence_001.png'  # Replace with your actual image path
+image_path = 'processed_images/10925197/10925197_page_030.jpeg'  # Replace with your actual image path
+# image_path = 'd14bad57-e995-4d4d-91bb-01e1737a9f82.jpeg'
 
 def delete_box(boxes):
     h = len(boxes)
@@ -27,7 +27,7 @@ image = cv2.imread(image_path)
 reader = easyocr.Reader(['vi', 'en'])  # 'vi' for Vietnamese
 
 # Use EasyOCR to detect and read text from the image
-results = reader.readtext(image_path, height_ths=1.5, slope_ths=5, width_ths=0.1)
+results = reader.readtext(image_path, height_ths=1.5, slope_ths=6, width_ths=7)
 print(results)
 
 # Define a color for the bounding box (e.g., red in BGR format)
