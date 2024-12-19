@@ -22,6 +22,7 @@ data_dict = {
     10732458: (10, 650, 50, 100, 10, 'data/BuomHoaTanTruyen.json', 0.1, 0.1, 110, 200, 40),
     10925197: (10, 550, 50, 100, 10, 'data/MaiDinhMongKy.json', 0.1, 0.1, 110, 200, 40),
     10729371: (10, 550, 50, 150, 10, 'data/HanhThucCa.json', 0.1, 0.1, 110, 200, 40),
+    10921169: (9, 600, 50, 100, 10, 'data/HuongSonQuanTheAmTanDich.json', 0.1, 0.1, 110, 200, 40),
     # id: sentences per page, crop_image_wide, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, width_ths_word_3, first_word_distance, last_word_distance
 
 }
