@@ -21,6 +21,9 @@ data_dict = {
     10923624: (11, 550, 160, 100, 10, 'data/TienPhaDichLuc.json', 0.1, 0.1, 110, 200, 40),
     10732458: (10, 650, 50, 100, 10, 'data/BuomHoaTanTruyen.json', 0.1, 0.1, 110, 200, 40),
     10925197: (10, 550, 50, 100, 10, 'data/MaiDinhMongKy.json', 0.1, 0.1, 110, 200, 40),
+    10729371: (10, 550, 50, 150, 10, 'data/HanhThucCa.json', 0.1, 0.1, 110, 200, 40),
+    # id: sentences per page, crop_image_wide, margin_x, margin_y, width_ths_pass, json, width_ths_word_2, width_ths_word_3, first_word_distance, last_word_distance
+
 }
 
 def shift_and_insert_image(folder_path, new_image_path, insert_index):
@@ -56,7 +59,7 @@ def parse_json(json_file):
 # Path to the folder containing images
 input_folder = 'processed_images/10925197'  
 pdf_id = os.path.basename(input_folder) 
-output_folder = f'image_crop/{pdf_id}'
+output_folder = f'image_crop/{pdf_id}' # image_crop/{pdf_id}
 
 sentence_per_image = data_dict[int(pdf_id)][0]
 crop_image_wide = data_dict[int(pdf_id)][1]
@@ -224,7 +227,7 @@ for filename in directories:
                 new_file = os.path.join(cropped_image_folder, f'cropped_word')
                 if not os.path.exists(new_file):
                     os.makedirs(new_file)                
-                results_word = reader.readtext(cropped_image_path, height_ths =1.5, slope_ths = 5, width_ths = width_ths_word_2) 
+                results_word = reader.readtext(cropped_image_path, height_ths =3, slope_ths = 5, width_ths = width_ths_word_2) 
                 word = [(result[0], result[1]) for result in results_word]  # List of (bounding box, text)
                 word.sort(key=lambda x: x[0][0][0]) 
                 if not word:

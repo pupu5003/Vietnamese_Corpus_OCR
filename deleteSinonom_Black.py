@@ -4,19 +4,15 @@ import os
 ##### KHONG CHAY LAI FILE NAY
 
 # Đường dẫn tới thư mục chứa hình ảnh
-input_folder = "image/Black"
-output_folder = "processed_images"
+input_folder = "image/Black/10923624"
+output_folder = "processed_images_10923624"
 
 # Tạo thư mục đầu ra nếu chưa tồn tại
 os.makedirs(output_folder, exist_ok=True)
 
 # Phạm vi màu
 ranges = [
-    (np.array([0, 0, 0]), np.array([180, 255, 30])),
-    (np.array([0, 0, 30]), np.array([180, 255, 60])),
-    (np.array([0, 0, 60]), np.array([180, 255, 90])),
-    (np.array([0, 0, 90]), np.array([180, 255, 120])),
-    (np.array([0, 0, 120]), np.array([180, 255, 150]))
+    (np.array([0, 0, 0]), np.array([145, 255, 150]))
 ]
 
 # Duyệt qua tất cả các thư mục con và tệp trong thư mục gốc
